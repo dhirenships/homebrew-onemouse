@@ -24,6 +24,16 @@ cask "onemouse" do
 
   app "OneMouse.app"
 
+  # OneMouse is not notarized, so Gatekeeper refuses a quarantined copy. The user
+  # chose to install it from this tap; clear the download quarantine so it opens.
+  postflight_steps do
+    run "/usr/bin/xattr",
+        args:           ["-d", "-r", "com.apple.quarantine", "{{appdir}}/OneMouse.app"],
+        must_succeed:   false,
+        writable_paths: ["OneMouse.app"],
+        writable_base:  :appdir
+  end
+
   zap trash: [
     "~/Library/Application Support/mouse",
     "~/Library/Application Support/OneMouse",
@@ -31,8 +41,8 @@ cask "onemouse" do
   ]
 
   caveats <<~EOS
-    OneMouse is ad hoc signed and is not notarized. If macOS blocks the first
-    launch, open System Settings > Privacy & Security and choose Open Anyway.
+    OneMouse is ad hoc signed and is not notarized. This cask removes the
+    download quarantine from OneMouse.app so macOS opens it without a warning.
     Enable Accessibility and Input Monitoring for OneMouse on each Mac.
     macOS may ask you to re-enable these permissions after an update.
   EOS
