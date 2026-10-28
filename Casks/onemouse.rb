@@ -1,13 +1,13 @@
 cask "onemouse" do
-  version "1.1.0"
+  version "1.1.1"
 
   on_arm do
-    sha256 "16932def7261e874132915375e5d8ce3c8171a3b6bdfd698572714b2dd687edf"
+    sha256 "c1d2b59be3c12ec323b1132d0d8b05f94ae9c65f7b9731f4f251038095f33197"
 
     url "https://onemouse.app/releases/#{version}/OneMouse-#{version}-arm64.zip"
   end
   on_intel do
-    sha256 "2bb58a6500fbc3f8671d8a17c0ed139e95a109a766b9c1fd827f39dd547682ea"
+    sha256 "0ba0cee12edec7fb9d89f210f263a404eee83372c570ad093edd31d4b942b4c7"
 
     url "https://onemouse.app/releases/#{version}/OneMouse-#{version}-x64.zip"
   end
@@ -41,9 +41,9 @@ cask "onemouse" do
   ]
 
   caveats <<~EOS
-    OneMouse is ad hoc signed and is not notarized. This cask removes the
-    download quarantine from OneMouse.app so macOS opens it without a warning.
-    Enable Accessibility and Input Monitoring for OneMouse on each Mac.
-    macOS may ask you to re-enable these permissions after an update.
+    OneMouse is signed with its own certificate and is not notarized. This cask
+    removes the download quarantine from OneMouse.app so macOS opens it without
+    a warning. On first launch OneMouse asks for Accessibility; turn it on for
+    OneMouse in System Settings on each Mac. The approval carries over to updates.
   EOS
 end
